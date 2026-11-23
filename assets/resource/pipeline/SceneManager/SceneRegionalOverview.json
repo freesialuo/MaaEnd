@@ -170,6 +170,26 @@
         "post_delay": 0,
         "rate_limit": 0
     },
+    "__ScenePrivateMenuRegionalOverviewWulingYuanyuanManorInn": {
+        "desc": "在武陵事务总览界面，找到缘缘庄客栈，但不保证展开后有空间显示内容",
+        "recognition": "And",
+        "all_of": [
+            "InRegionalOverviewWuling",
+            "__ScenePrivateMenuRegionalOverviewIconRegion",
+            {
+                "recognition": "TemplateMatch",
+                "roi": "__ScenePrivateMenuRegionalOverviewIconRegion",
+                "template": [
+                    "SceneManager/RegionalOverview/YuanyuanManorInnWuling.png"
+                ],
+                "threshold": 0.85
+            }
+        ],
+        "box_index": 2,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 0
+    },
     "__ScenePrivateMenuRegionalOverviewAnyExpandRecyclingStation": {
         "desc": "在事务总览界面，展开资源回收站",
         "recognition": "And",
@@ -299,6 +319,73 @@
         "rate_limit": 0,
         "next": [
             "SceneMenuRegionalOverviewWulingTrialOfSwordmancy",
+            // 若展开后空间不足以显示内容
+            "__ScenePrivateMenuRegionalOverviewAnyListComplete",
+            "[JumpBack]__ScenePrivateMenuRegionalOverviewAnyListScroll"
+        ]
+    },
+    "__ScenePrivateMenuRegionalOverviewWulingExpandYuanyuanManorInn": {
+        "desc": "在武陵事务总览界面，展开缘缘庄客栈",
+        "recognition": "And",
+        "all_of": [
+            "__ScenePrivateMenuRegionalOverviewWulingYuanyuanManorInn",
+            {
+                "recognition": "TemplateMatch",
+                "roi": "__ScenePrivateMenuRegionalOverviewWulingYuanyuanManorInn",
+                "roi_offset": [
+                    864,
+                    7,
+                    -12,
+                    -11
+                ],
+                "template": "SceneManager/RegionalOverview/ExpandButton.png",
+                "threshold": 0.85
+            }
+        ],
+        "box_index": 1,
+        "pre_delay": 0,
+        "action": "Click",
+        "post_delay": 0,
+        "rate_limit": 0,
+        "next": [
+            "__ScenePrivateMenuRegionalOverviewWulingYuanyuanManorInnExpanded"
+        ]
+    },
+    "__ScenePrivateMenuRegionalOverviewWulingYuanyuanManorInnExpanded": {
+        "desc": "在武陵事务总览界面，且缘缘庄客栈已展开",
+        "recognition": "And",
+        "all_of": [
+            "__ScenePrivateMenuRegionalOverviewWulingYuanyuanManorInn",
+            "__ScenePrivateMenuRegionalOverviewFullRegion",
+            {
+                "recognition": "TemplateMatch",
+                "roi": "__ScenePrivateMenuRegionalOverviewWulingYuanyuanManorInn",
+                "roi_offset": [
+                    864,
+                    7,
+                    -12,
+                    -11
+                ],
+                "template": "SceneManager/RegionalOverview/CollapseButton.png",
+                "threshold": 0.85
+            }
+        ],
+        "pre_wait_freezes": {
+            "time": 80,
+            "target": "__ScenePrivateMenuRegionalOverviewFullRegion"
+        },
+        "pre_delay": 0,
+        "action": "Custom",
+        "custom_action": "SubTask",
+        "custom_action_param": {
+            "sub": [
+                "__ScenePrivateMenuRegionalOverviewAnyResetListComplete"
+            ]
+        },
+        "post_delay": 0,
+        "rate_limit": 0,
+        "next": [
+            "SceneMenuRegionalOverviewWulingYuanyuanManorInn",
             // 若展开后空间不足以显示内容
             "__ScenePrivateMenuRegionalOverviewAnyListComplete",
             "[JumpBack]__ScenePrivateMenuRegionalOverviewAnyListScroll"
